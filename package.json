@@ -20,6 +20,9 @@
 	"files": [
 		"./lib/"
 	],
+	"bin": {
+		"update-changelog": "./bin/update-changelog.js"
+	},
 	"engines": {
 		"node": "^18.12 || >=20.9"
 	},
@@ -27,6 +30,7 @@
 	"scripts": {
 		"prepare": "husky",
 		"preversion": "pnpm test",
+		"version": "./bin/update-changelog.js && git add CHANGELOG.md",
 		"postversion": "pnpm publish --access=public",
 		"postpublish": "git push --follow-tags",
 		"lint": "eslint",

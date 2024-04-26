@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 ## [Unreleased]
 
+### Added
+
+- The `update-changelog` CLI utility.
+
 ## [0.0.1] — 2024–04–26
 
 Initialized project.
