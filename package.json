@@ -1,0 +1,49 @@
+{
+	"name": "@firefoxic/utils",
+	"description": "Collection of useful utilities for JavaScript and Node.js.",
+	"version": "0.0.1",
+	"license": "MIT",
+	"author": {
+		"name": "Sergey Artemov",
+		"email": "firefoxic.dev@gmail.com"
+	},
+	"homepage": "https://github.com/firefoxic/utils#readme",
+	"bugs": {
+		"url": "https://github.com/firefoxic/utils/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/firefoxic/utils.git"
+	},
+	"type": "module",
+	"exports": "./lib/index.js",
+	"files": [
+		"./lib/"
+	],
+	"engines": {
+		"node": "^18.12 || >=20.9"
+	},
+	"packageManager": "pnpm@9.0.6",
+	"scripts": {
+		"prepare": "husky",
+		"preversion": "pnpm test",
+		"postversion": "pnpm publish --access=public",
+		"postpublish": "git push --follow-tags",
+		"lint": "eslint",
+		"test": "node --test",
+		"pretest": "pnpm lint"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.1.1",
+		"@stylistic/eslint-plugin-js": "^1.7.2",
+		"eslint": "^9.1.1",
+		"globals": "^15.0.0",
+		"husky": "^9.0.11"
+	},
+	"keywords": [
+		"javascript",
+		"node.js",
+		"prepare",
+		"utils"
+	]
+}
