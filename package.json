@@ -1,7 +1,7 @@
 {
 	"name": "@firefoxic/utils",
 	"description": "Collection of useful utilities for JavaScript and Node.js.",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"license": "MIT",
 	"author": {
 		"name": "Sergey Artemov",
