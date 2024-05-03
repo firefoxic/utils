@@ -7,16 +7,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 ## [Unreleased]
 
+### Fixed
+
+- Creating links for the first version in `update-changelog`.
+
 ## [0.1.0] — 2024–04–26
 
 ### Added
 
 - The `update-changelog` CLI utility.
 
-## [0.0.1] — 2024–04–26
-
-Initialized project.
-
 [Unreleased]: https://github.com/firefoxic/utils/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/firefoxic/utils/compare/v0.0.1...v0.1.0
-[0.0.1]: https://github.com/firefoxic/utils/releases/tag/v0.0.1
+[0.1.0]: https://github.com/firefoxic/utils/releases/tag/v0.1.0
