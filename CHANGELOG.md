@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 ## [Unreleased]
 
+### Added
+
+- The `getProjectRoot` utility that returns the subdirectory to which the frontend project is deployed on GitHub Pages.
+
 ## [0.1.1] — 2024–05–03
 
 ### Fixed
