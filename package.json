@@ -23,23 +23,21 @@
 	"engines": {
 		"node": "^18.12 || >=20.9"
 	},
-	"packageManager": "pnpm@9.0.6",
+	"packageManager": "pnpm@9.1.0",
 	"scripts": {
 		"prepare": "husky",
+		"lint": "eslint",
+		"pretest": "pnpm lint",
+		"test": "node --test",
 		"preversion": "pnpm test",
 		"version": "update-changelog && git add CHANGELOG.md",
 		"postversion": "pnpm publish --access=public",
-		"postpublish": "git push --follow-tags",
-		"lint": "eslint",
-		"test": "node --test",
-		"pretest": "pnpm lint"
+		"postpublish": "git push --follow-tags"
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.1.1",
+		"@firefoxic/eslint-config": "^1.0.0",
 		"@firefoxic/update-changelog": "^0.1.0",
-		"@stylistic/eslint-plugin-js": "^1.7.2",
-		"eslint": "^9.1.1",
-		"globals": "^15.0.0",
+		"eslint": "^9.2.0",
 		"husky": "^9.0.11"
 	},
 	"keywords": [
