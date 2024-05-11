@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 ## [Unreleased]
 
+### Changed
+
+- The `update-changelog` CLI utility has been moved to the [`@firefoxic/update-changelog`](https://github.com/firefoxic/update-changelog#readme) project.
+
 ## [0.2.0] — 2024–05–07
 
 ### Added

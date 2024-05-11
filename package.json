@@ -20,9 +20,6 @@
 	"files": [
 		"./lib/"
 	],
-	"bin": {
-		"update-changelog": "./bin/update-changelog.js"
-	},
 	"engines": {
 		"node": "^18.12 || >=20.9"
 	},
@@ -30,7 +27,7 @@
 	"scripts": {
 		"prepare": "husky",
 		"preversion": "pnpm test",
-		"version": "./bin/update-changelog.js && git add CHANGELOG.md",
+		"version": "update-changelog && git add CHANGELOG.md",
 		"postversion": "pnpm publish --access=public",
 		"postpublish": "git push --follow-tags",
 		"lint": "eslint",
@@ -39,6 +36,7 @@
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.1.1",
+		"@firefoxic/update-changelog": "^0.1.0",
 		"@stylistic/eslint-plugin-js": "^1.7.2",
 		"eslint": "^9.1.1",
 		"globals": "^15.0.0",
