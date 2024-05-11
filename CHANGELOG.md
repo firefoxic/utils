@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 ## [Unreleased]
 
+## [0.4.0] — 2024–05–12
+
 ### Added
 
 - The `setGitHubEnvVar` utility that adds the specified environment variable with the specified value if the `CI` environment variable is set.
@@ -35,7 +37,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 - The `update-changelog` CLI utility.
 
-[Unreleased]: https://github.com/firefoxic/utils/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/firefoxic/utils/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/firefoxic/utils/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/firefoxic/utils/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/firefoxic/utils/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/firefoxic/utils/compare/v0.1.0...v0.1.1
