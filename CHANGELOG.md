@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 ## [Unreleased]
 
+### Added
+
+- The `setGitHubEnvVar` utility that adds the specified environment variable with the specified value if the `CI` environment variable is set.
+
 ## [0.3.0] — 2024–05–11
 
 ### Changed

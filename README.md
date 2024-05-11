@@ -52,6 +52,45 @@ export default defineConfig({
 })
 ```
 
+### `setGitHubEnvVar`
+
+Your action must accept the environment variable you pass into it from the JS. For example, you can pass the path to the distribution directory from the `vite.config.js`:
+
+```js
+import { defineConfig } from "vite"
+
+import { setGitHubEnvVar } from "@firefoxic/utils"
+
+const PATH_TO_SRC = `./a_very_strange_path_to_source`
+const PATH_TO_DIST = `./a_very_strange_path_to_dist`
+
+setGitHubEnvVar(`PATH_TO_DIST`, PATH_TO_DIST)
+
+export default defineConfig({
+	root: PATH_TO_SRC,
+	build: {
+		outDir: `.${PATH_TO_DIST}`,
+	},
+})
+```
+
+Then you can use this variable in the deploy step of your action:
+
+```yaml
+jobs:
+  job_name:
+    runs-on: ubuntu-latest
+    steps:
+
+      # Any steps before deploying a project
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: ${{ env.PATH_TO_DIST }}
+          branch: gh-pages
+```
+
 [license-url]: https://github.com/firefoxic/utils/blob/main/LICENSE.md
 [license-image]: https://img.shields.io/badge/License-MIT-limegreen.svg
 
