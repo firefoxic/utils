@@ -101,4 +101,4 @@ jobs:
 [npm-image]: https://badge.fury.io/js/@firefoxic%2Futils.svg
 
 [test-url]: https://github.com/firefoxic/utils/actions
-[test-image]: https://github.com/firefoxic/utils/actions/workflows/test.yml/badge.svg?branch=main
+[test-image]: https://github.com/firefoxic/utils/actions/workflows/test.yaml/badge.svg?branch=main
