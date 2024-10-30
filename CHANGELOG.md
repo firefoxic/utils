@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 ## [Unreleased]
 
+### Changed
+
+- The minimum required `node.js` version has been increased to `20.12.0`, except for version `21`.
+
 ## [0.4.0] — 2024–05–12
 
 ### Added
