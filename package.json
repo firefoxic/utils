@@ -21,7 +21,7 @@
 		"./lib/"
 	],
 	"engines": {
-		"node": "^20.12 || >=22.11"
+		"node": "^22.18 || >=24.11"
 	},
 	"packageManager": "pnpm@9.12.3",
 	"scripts": {
