@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 ## [Unreleased]
 
+## [2.0.0] — 2025–12–09
+
 ### Changed
 
 - The minimum required `node.js` version has been increased to `22.18.0`, except for version `23`.
@@ -47,7 +49,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 - The `update-changelog` CLI utility.
 
-[Unreleased]: https://github.com/firefoxic/utils/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/firefoxic/utils/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/firefoxic/utils/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/firefoxic/utils/compare/v0.4.0...v1.0.0
 [0.4.0]: https://github.com/firefoxic/utils/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/firefoxic/utils/compare/v0.2.0...v0.3.0
