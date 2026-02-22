@@ -21,7 +21,8 @@
 		"./lib/"
 	],
 	"engines": {
-		"node": "^22.18 || >=24.11"
+		"node": ">=22.18",
+		"pnpm": ">=10.30"
 	},
 	"scripts": {
 		"help": "make help",
