@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 ## [Unreleased]
 
+### Fixed
+
+- The integrity of the package is no longer breached.
+
 ## [2.1.0] — 2026–03–04
 
 ### Added

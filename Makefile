@@ -28,7 +28,7 @@ build: lint test ## 🏗️  Build the project
 	@tsup
 .PHONY: build
 
-release: lint test ## 🚀 Release a new version
+release: build ## 🚀 Release a new version
 	@pnpm dlx @firefoxic/release-it
 .PHONY: release
 
