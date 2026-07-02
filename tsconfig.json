@@ -6,15 +6,17 @@
 		"lib": [
 			"ESNext",
 		],
+		"types": [
+			"node"
+		],
 		"outDir": "./dist",
 		"rootDir": "./src",
-		"strict": true,
-		"esModuleInterop": true,
 		"exactOptionalPropertyTypes": true,
 		"skipLibCheck": true,
 		"declaration": true,
 		"noEmitOnError": true,
 		"resolveJsonModule": true,
+		"isolatedDeclarations": true
 	},
 	"include": [
 		"src/**/*",
