@@ -34,21 +34,21 @@
 	"devEngines": {
 		"runtime": {
 			"name": "node",
-			"version": ">=26.4",
+			"version": ">=26.5",
 			"onFail": "download"
 		},
 		"packageManager": {
 			"name": "pnpm",
-			"version": ">=11.9",
+			"version": ">=11.11",
 			"onFail": "download"
 		}
 	},
 	"devDependencies": {
 		"@firefoxic/oxlint-config": "^0.4.0",
-		"@types/node": "^26.1.0",
-		"oxlint": "^1.72.0",
-		"tsdown": "^0.22.3",
-		"typescript": "^7.0.1-rc"
+		"@types/node": "^26.1.1",
+		"oxlint": "^1.73.0",
+		"tsdown": "^0.22.4",
+		"typescript": "^7.0.2"
 	},
 	"keywords": [
 		"javascript",
