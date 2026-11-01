@@ -29,7 +29,8 @@
 		"node": ">=22.18"
 	},
 	"scripts": {
-		"help": "make help"
+		"help": "make help",
+		"prepare": "git config --local core.hooksPath .githooks || true"
 	},
 	"devEngines": {
 		"runtime": {
