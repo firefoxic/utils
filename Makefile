@@ -1,34 +1,38 @@
-export PATH := ./node_modules/.bin:$(PATH)
+SHELL := bash
+.SHELLFLAGS := -euo pipefail -c
+.ONESHELL:
+
+export PATH := $(CURDIR)/node_modules/.bin:$(PATH)
 
 help: ## 🧾 Print this message
 	$(call print_help)
 .PHONY: help
 
 check: ## ✅ Check types with TypeScript
-	@tsc --noEmit
+	tsc --noEmit
 .PHONY: check
 
 lint: ## 🧬 Lint code by oxlint
-	@oxlint
+	oxlint
 .PHONY: lint
 
 fix: ## 🩹 Fix code by oxlint
-	@oxlint --fix
+	oxlint --fix
 .PHONY: fix
 
 test: ## 🧪 Run tests
-	@node --test
+	node --test
 .PHONY: test
 
 build: ## 🏗️  Build the project
-	@tsdown
+	tsdown
 .PHONY: build
 
 verify: check lint test build ## ✅ Run every check the CI runs
 .PHONY: verify
 
 release: verify ## 🚀 Release a new version
-	@pnpm dlx @firefoxic/release-it
+	pnpm dlx @firefoxic/release-it
 .PHONY: release
 
 ANSI_RESET := \033[0m
@@ -37,7 +41,7 @@ ANSI_BOLD_CYAN := \033[1;36m
 
 define print_help
 	@printf "\n\t📜 $(ANSI_BOLD)Available targets:$(ANSI_RESET)\n\n"
-	@grep -E '^[a-zA-Z0-9_-]+:.*?## ' $(MAKEFILE_LIST) \
+	grep -E '^[a-zA-Z0-9_-]+:.*?## ' $(MAKEFILE_LIST) \
 	| awk -F ':|##' '\
 	BEGIN { \
 		ANSI_BOLD_CYAN = "$(ANSI_BOLD_CYAN)"; \
