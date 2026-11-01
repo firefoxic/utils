@@ -45,9 +45,9 @@
 		}
 	},
 	"devDependencies": {
-		"@firefoxic/oxlint-config": "^0.4.0",
+		"@firefoxic/oxlint-config": "~0.6",
 		"@types/node": "^26.1.1",
-		"oxlint": "^1.73.0",
+		"oxlint": "^1",
 		"tsdown": "^0.22.4",
 		"typescript": "^7.0.2"
 	},
