@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 ## [Unreleased]
 
+## [2.2.0] — 2026–11–13
+
 ### Added
 
 - The `get-node-matrix` CLI utility that resolves the minimum Node.js versions from a project's `package.json` `engines.node` field for use in a GitHub Actions matrix.
@@ -71,7 +73,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 - The `update-changelog` CLI utility.
 
-[Unreleased]: https://github.com/firefoxic/utils/compare/v2.1.2...HEAD
+[Unreleased]: https://github.com/firefoxic/utils/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/firefoxic/utils/compare/v2.1.2...v2.2.0
 [2.1.2]: https://github.com/firefoxic/utils/compare/v2.1.1...v2.1.2
 [2.1.1]: https://github.com/firefoxic/utils/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/firefoxic/utils/compare/v2.0.0...v2.1.0
