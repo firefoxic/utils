@@ -9,7 +9,7 @@ help: ## 🧾 Print this message
 .PHONY: help
 
 check: ## ✅ Check types with TypeScript
-	tsc --noEmit
+	tsrs
 .PHONY: check
 
 lint: ## 🧬 Lint code by oxlint
@@ -25,7 +25,8 @@ test: ## 🧪 Run tests
 .PHONY: test
 
 build: ## 🏗️  Build the project
-	tsdown
+	rm -rf dist
+	tsrs -p tsconfig.build.json
 .PHONY: build
 
 verify: check lint test build ## ✅ Run every check the CI runs
