@@ -1,2 +1,2 @@
-export { getProjectRoot } from "./getProjectRoot.js"
-export { setGitHubEnvVar } from "./setGitHubEnvVar.js"
+export { getProjectRoot } from "./get-project-root.ts"
+export { setGitHubEnvVar } from "./set-github-env-var.ts"
