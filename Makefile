@@ -21,8 +21,12 @@ fix: ## 🩹 Fix code by oxlint
 .PHONY: fix
 
 test: ## 🧪 Run tests
-	node --test
+	vitest
 .PHONY: test
+
+coverage: ## 📊 Report the test coverage of the source
+	vitest --coverage
+.PHONY: coverage
 
 build: ## 🏗️  Build the project
 	rm -rf dist

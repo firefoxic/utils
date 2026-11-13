@@ -2,23 +2,24 @@
 
 ## Project
 
-Single-package TypeScript library (`@firefoxic/utils`) exposing `getProjectRoot` and `setGitHubEnvVar`. Built with tsrs (a Rust port of tsc), linted with oxlint, tested with Node's built-in test runner. No test files exist yet.
+Single-package TypeScript library (`@firefoxic/utils`) exposing `getProjectRoot` and `setGitHubEnvVar`. Built with tsrs (a Rust port of tsc), linted with oxlint, tested with vitest.
 
 ## Commands
 
 - `make help` — list targets.
 - `make check` — typecheck (`tsrs`).
 - `make lint` / `make fix` — oxlint (`--fix` for the latter).
-- `make test` — `node --test`.
+- `make test` — `vitest` (watch disabled in `vitest.config.ts`).
+- `make coverage` — `vitest --coverage` (thresholds in `vitest.config.ts`; output in `coverage/`, gitignored).
 - `make build` — `rm -rf dist` then `tsrs -p tsconfig.build.json`.
 - `make verify` — `check lint test build`; this is what CI runs.
 - `make release` — `verify` plus `pnpm dlx @firefoxic/release-it`.
-- Single test file: `node --test path/to/file.test.ts` (Node 26 strips types).
+- Single test file: `vitest path/to/file.test.ts`; filter by name with `vitest -t "pattern"`.
 - Minimum focused verification after edits: `make lint && make check`.
 
 ## Toolchain
 
-- Use pnpm, not npm/yarn. `pnpm install` runs `prepare`, which sets `core.hooksPath .githooks`.
+- Use pnpm, not npm/yarn. `pnpm install` runs `prepare`, which sets `core.hooksPath .githooks`. Developer commands live in the Makefile; `package.json` keeps only `prepare` (and `help`).
 - Dev engines auto-download Node >=26.13 / pnpm >=12.19 if missing (`devEngines.onFail: download`). Runtime requires Node >=22.18.
 - `tsrs` is not on `PATH` globally; the Makefile prepends `node_modules/.bin`. Invoke via `make` or `./node_modules/.bin/tsrs`.
 - Pre-commit hook (`.githooks/pre-commit`) runs `git stash -ku` then `make lint && make test`. Untracked files are stashed, so they are not linted/tested by the hook.
@@ -41,5 +42,5 @@ Single-package TypeScript library (`@firefoxic/utils`) exposing `getProjectRoot`
 
 - `getProjectRoot()` returns `""` (not `"/"`) when `CI` or `REPO_NAME` is unset, because callers append `/` (`${getProjectRoot()}/`). Do not "fix" it to return `"/"`.
 - `setGitHubEnvVar` is async; it no-ops outside CI and throws when `GITHUB_ENV` is unset. It only appends to `GITHUB_ENV`.
-- No tests exist yet; `node --test` reports 0 and exits 0. Add tests as `*.test.ts`.
+- Tests use vitest (`*.test.ts` under `src/`); `vitest` runs once (watch disabled). Oxlint enforces backticks for ordinary strings and double quotes for import/export sources.
 - Use `tmp/` for scratch work; it is gitignored and must never be committed.
