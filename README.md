@@ -90,6 +90,45 @@ jobs:
           branch: gh-pages
 ```
 
+### `get-node-matrix`
+
+A CLI utility that reads the `engines.node` field from the project's `package.json` and prints the minimum Node.js versions (as a JSON array) for use in a GitHub Actions matrix. When running in a GitHub Actions environment, it also appends `node_versions=...` to the file pointed to by `GITHUB_OUTPUT`.
+
+Use it in the `discover` job of your workflow:
+
+```yaml
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      node_versions: ${{ steps.matrix.outputs.node_versions }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/setup@v3
+        with:
+          cache: true
+          node-version: "26"
+      - id: matrix
+        run: pnpm dlx --package @firefoxic/utils get-node-matrix
+
+  test:
+    needs: discover
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ${{ fromJSON(needs.discover.outputs.node_versions) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/setup@v3
+        with:
+          cache: true
+          runtime: node@${{ matrix.node }}
+      - run: make verify
+```
+
+The utility resolves the project's `package.json` from the current working directory (walking up the directory tree), or from the `npm_package_json` environment variable when run through an npm/pnpm script.
+
 [license-url]: https://github.com/firefoxic/utils/blob/main/LICENSE.md
 [license-image]: https://img.shields.io/badge/License-MIT-limegreen.svg
 

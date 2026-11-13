@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 ## [Unreleased]
 
+### Added
+
+- The `get-node-matrix` CLI utility that resolves the minimum Node.js versions from a project's `package.json` `engines.node` field for use in a GitHub Actions matrix.
+
 ## [2.1.2] — 2026–07–02
 
 ### Fixed
