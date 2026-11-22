@@ -44,16 +44,16 @@
 		},
 		"packageManager": {
 			"name": "pnpm",
-			"version": ">=12.19",
+			"version": ">=12.22",
 			"onFail": "download"
 		}
 	},
 	"devDependencies": {
-		"@firefoxic/oxlint-config": "~0.6",
+		"@firefoxic/oxlint-config": "~0.7",
 		"@types/node": "^26",
 		"@vitest/coverage-v8": "^5",
 		"oxlint": "^1",
-		"tsrs": "^0.25.0-ts7",
+		"tsrs": "latest",
 		"vitest": "^5"
 	},
 	"keywords": [
