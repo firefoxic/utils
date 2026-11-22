@@ -43,6 +43,36 @@ interface PackageJson {
 	},
 }
 
+function printHelp (): void {
+	process.stdout.write(`
+Usage:
+  get-node-matrix [options]
+
+Description:
+  Reads the engines.node field from package.json files
+  and prints the minimum Node.js versions as a JSON array
+  for use in a GitHub Actions matrix.
+  When running in GitHub Actions, the result is also appended
+  to the file pointed to by GITHUB_OUTPUT as node_versions=...
+
+Options:
+  -d, --dependencies <packages>
+            Also read engines.node from the specified dependencies.
+            Multiple packages can be passed as a comma-separated list.
+  -h, --help
+            Show this help message and exit.
+
+Examples:
+  get-node-matrix
+  get-node-matrix --dependencies stylelint
+  get-node-matrix -d "stylelint,postcss"
+  pnpm dlx --package @firefoxic/utils get-node-matrix -d stylelint
+
+`)
+
+	process.exit(0)
+}
+
 function parseArgs (): { dependencies: string[] } {
 	let dependencies: string[] = []
 
@@ -50,6 +80,8 @@ function parseArgs (): { dependencies: string[] } {
 		let arg = process.argv[i]
 
 		if (!arg) continue
+
+		if (arg === `--help` || arg === `-h`) printHelp()
 
 		if (arg === `--dependencies` || arg === `-d`) {
 			if (i + 1 >= process.argv.length) throw new Error(`--dependencies requires a list of package names`)

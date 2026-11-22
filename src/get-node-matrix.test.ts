@@ -297,4 +297,40 @@ describe(`get-node-matrix`, () => {
 			`Project package.json not found`,
 		)
 	})
+
+	it(`prints help and exits with code 0 when --help is passed`, async () => {
+		writeFileSync(
+			path.join(dir, `package.json`),
+			JSON.stringify({ engines: { node: `>=20.0.0` } }),
+		)
+		process.chdir(dir)
+		process.argv = [`node`, `get-node-matrix.ts`, `--help`]
+		let exitSpy = vi.spyOn(process, `exit`).mockImplementation(() => undefined as never)
+		let writeSpy = vi.spyOn(process.stdout, `write`).mockImplementation(() => true)
+
+		await import(`./get-node-matrix.ts`)
+
+		expect(exitSpy).toHaveBeenCalledWith(0)
+		expect(writeSpy).toHaveBeenCalledWith(expect.stringContaining(`Usage:\n  get-node-matrix`))
+		expect(writeSpy).toHaveBeenCalledWith(expect.stringContaining(`--dependencies`))
+		expect(writeSpy).toHaveBeenCalledWith(expect.stringContaining(`-d`))
+		expect(writeSpy).toHaveBeenCalledWith(expect.stringContaining(`--help`))
+		expect(writeSpy).toHaveBeenCalledWith(expect.stringContaining(`-h`))
+	})
+
+	it(`prints help and exits with code 0 when -h is passed`, async () => {
+		writeFileSync(
+			path.join(dir, `package.json`),
+			JSON.stringify({ engines: { node: `>=20.0.0` } }),
+		)
+		process.chdir(dir)
+		process.argv = [`node`, `get-node-matrix.ts`, `-h`]
+		let exitSpy = vi.spyOn(process, `exit`).mockImplementation(() => undefined as never)
+		let writeSpy = vi.spyOn(process.stdout, `write`).mockImplementation(() => true)
+
+		await import(`./get-node-matrix.ts`)
+
+		expect(exitSpy).toHaveBeenCalledWith(0)
+		expect(writeSpy).toHaveBeenCalledWith(expect.stringContaining(`Usage:\n  get-node-matrix`))
+	})
 })

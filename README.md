@@ -131,6 +131,8 @@ The utility resolves the project's `package.json` from the current working d
 
 By default it reads `engines.node` from the calling project's own `package.json`. Pass `--dependencies <package>` (or `--dependencies=<package>`, or the short form `-d <package>`) to also read it from dependencies — for example `--dependencies stylelint` to take the Node.js versions required by `stylelint` when it is installed as a dependency. Multiple packages can be passed as a comma-separated list: `--dependencies "stylelint,postcss"`. Versions from the project and all specified dependencies are merged into a single deduplicated list, keeping only the lowest version in each major line (e.g. `22.18.0` over `22.22.2`). If `engines.node` is missing everywhere, the utility fails with an error.
 
+Pass `--help` or `-h` to show the CLI help message.
+
 [license-url]: https://github.com/firefoxic/utils/blob/main/LICENSE.md
 [license-image]: https://img.shields.io/badge/License-MIT-limegreen.svg
 
