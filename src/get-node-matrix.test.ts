@@ -14,6 +14,7 @@ describe(`get-node-matrix`, () => {
 		vi.resetModules()
 		delete process.env.npm_package_json
 		delete process.env.GITHUB_OUTPUT
+		process.argv = [`node`, `get-node-matrix.ts`]
 	})
 
 	afterEach(() => {
@@ -107,13 +108,172 @@ describe(`get-node-matrix`, () => {
 		expect(readFileSync(outputFile, `utf8`)).toBe(`node_versions=["20.0.0"]\n`)
 	})
 
-	it(`throws when engines.node is missing`, async () => {
+	it(`throws when engines.node is missing everywhere`, async () => {
 		writeFileSync(path.join(dir, `package.json`), JSON.stringify({}))
 
 		process.chdir(dir)
 
 		await expect(import(`./get-node-matrix.ts`)).rejects.toThrow(
-			`Project package.json does not specify engines.node`,
+			`No engines.node found in the project package.json or any of the specified dependencies`,
+		)
+	})
+
+	it(`reads engines.node from the project and merges with a single peer`, async () => {
+		writeFileSync(
+			path.join(dir, `package.json`),
+			JSON.stringify({ engines: { node: `>=20.0.0` } }),
+		)
+		let peerDir = path.join(dir, `node_modules`, `stylelint`)
+		mkdirSync(peerDir, { recursive: true })
+		writeFileSync(
+			path.join(peerDir, `package.json`),
+			JSON.stringify({ engines: { node: `>=18.0.0 || >=20.0.0` } }),
+		)
+		process.chdir(dir)
+		process.argv = [`node`, `get-node-matrix.ts`, `--dependencies`, `stylelint`]
+		let spy = vi.spyOn(console, `info`).mockReturnValue()
+
+		await import(`./get-node-matrix.ts`)
+
+		expect(spy).toHaveBeenCalledWith(`Node.js matrix: ["18.0.0","20.0.0"]`)
+	})
+
+	it(`reads engines.node from multiple dependencies passed as a comma-separated list`, async () => {
+		writeFileSync(
+			path.join(dir, `package.json`),
+			JSON.stringify({ engines: { node: `>=20.0.0` } }),
+		)
+		for (let peer of [`stylelint`, `postcss`]) {
+			let peerDir = path.join(dir, `node_modules`, peer)
+			mkdirSync(peerDir, { recursive: true })
+			writeFileSync(
+				path.join(peerDir, `package.json`),
+				JSON.stringify({ engines: { node: `>=18.0.0` } }),
+			)
+		}
+		process.chdir(dir)
+		process.argv = [`node`, `get-node-matrix.ts`, `--dependencies`, `stylelint,postcss`]
+		let spy = vi.spyOn(console, `info`).mockReturnValue()
+
+		await import(`./get-node-matrix.ts`)
+
+		expect(spy).toHaveBeenCalledWith(`Node.js matrix: ["18.0.0","20.0.0"]`)
+	})
+
+	it(`reads engines.node from peers only when the project has none`, async () => {
+		writeFileSync(path.join(dir, `package.json`), JSON.stringify({}))
+		let peerDir = path.join(dir, `node_modules`, `postcss`)
+		mkdirSync(peerDir, { recursive: true })
+		writeFileSync(
+			path.join(peerDir, `package.json`),
+			JSON.stringify({ engines: { node: `>=18.0.0` } }),
+		)
+		process.chdir(dir)
+		process.argv = [`node`, `get-node-matrix.ts`, `--dependencies=postcss`]
+		let spy = vi.spyOn(console, `info`).mockReturnValue()
+
+		await import(`./get-node-matrix.ts`)
+
+		expect(spy).toHaveBeenCalledWith(`Node.js matrix: ["18.0.0"]`)
+	})
+
+	it(`deduplicates versions across project and peers`, async () => {
+		writeFileSync(
+			path.join(dir, `package.json`),
+			JSON.stringify({ engines: { node: `>=20.0.0 || >=22.0.0` } }),
+		)
+		let peerDir = path.join(dir, `node_modules`, `stylelint`)
+		mkdirSync(peerDir, { recursive: true })
+		writeFileSync(
+			path.join(peerDir, `package.json`),
+			JSON.stringify({ engines: { node: `>=20.0.0` } }),
+		)
+		process.chdir(dir)
+		process.argv = [`node`, `get-node-matrix.ts`, `--dependencies`, `stylelint`]
+		let spy = vi.spyOn(console, `info`).mockReturnValue()
+
+		await import(`./get-node-matrix.ts`)
+
+		expect(spy).toHaveBeenCalledWith(`Node.js matrix: ["20.0.0","22.0.0"]`)
+	})
+
+	it(`keeps only the lowest version in each major line`, async () => {
+		writeFileSync(
+			path.join(dir, `package.json`),
+			JSON.stringify({ engines: { node: `>=22.22.2 || >=22.18.0 || >=26.13.0` } }),
+		)
+		process.chdir(dir)
+		process.argv = [`node`, `get-node-matrix.ts`]
+		let spy = vi.spyOn(console, `info`).mockReturnValue()
+
+		await import(`./get-node-matrix.ts`)
+
+		expect(spy).toHaveBeenCalledWith(`Node.js matrix: ["22.18.0","26.13.0"]`)
+	})
+
+	it(`keeps only the lowest version in each major line across project and dependencies`, async () => {
+		writeFileSync(
+			path.join(dir, `package.json`),
+			JSON.stringify({ engines: { node: `>=22.22.2 || >=26.0.0` } }),
+		)
+		let peerDir = path.join(dir, `node_modules`, `stylelint`)
+		mkdirSync(peerDir, { recursive: true })
+		writeFileSync(
+			path.join(peerDir, `package.json`),
+			JSON.stringify({ engines: { node: `>=22.18.0 || >=26.13.0` } }),
+		)
+		process.chdir(dir)
+		process.argv = [`node`, `get-node-matrix.ts`, `--dependencies`, `stylelint`]
+		let spy = vi.spyOn(console, `info`).mockReturnValue()
+
+		await import(`./get-node-matrix.ts`)
+
+		expect(spy).toHaveBeenCalledWith(`Node.js matrix: ["22.18.0","26.0.0"]`)
+	})
+
+	it(`supports the short -d flag`, async () => {
+		writeFileSync(
+			path.join(dir, `package.json`),
+			JSON.stringify({ engines: { node: `>=20.0.0` } }),
+		)
+		let peerDir = path.join(dir, `node_modules`, `postcss`)
+		mkdirSync(peerDir, { recursive: true })
+		writeFileSync(
+			path.join(peerDir, `package.json`),
+			JSON.stringify({ engines: { node: `>=18.0.0` } }),
+		)
+		process.chdir(dir)
+		process.argv = [`node`, `get-node-matrix.ts`, `-d`, `postcss`]
+		let spy = vi.spyOn(console, `info`).mockReturnValue()
+
+		await import(`./get-node-matrix.ts`)
+
+		expect(spy).toHaveBeenCalledWith(`Node.js matrix: ["18.0.0","20.0.0"]`)
+	})
+
+	it(`throws when --dependencies is passed without a value`, async () => {
+		writeFileSync(
+			path.join(dir, `package.json`),
+			JSON.stringify({ engines: { node: `>=20.0.0` } }),
+		)
+		process.chdir(dir)
+		process.argv = [`node`, `get-node-matrix.ts`, `--dependencies`]
+
+		await expect(import(`./get-node-matrix.ts`)).rejects.toThrow(
+			`--dependencies requires a list of package names`,
+		)
+	})
+
+	it(`throws when --dependencies is passed but none of them nor the project has engines.node`, async () => {
+		writeFileSync(path.join(dir, `package.json`), JSON.stringify({}))
+		let peerDir = path.join(dir, `node_modules`, `stylelint`)
+		mkdirSync(peerDir, { recursive: true })
+		writeFileSync(path.join(peerDir, `package.json`), JSON.stringify({}))
+		process.chdir(dir)
+		process.argv = [`node`, `get-node-matrix.ts`, `--dependencies`, `stylelint`]
+
+		await expect(import(`./get-node-matrix.ts`)).rejects.toThrow(
+			`No engines.node found in the project package.json or any of the specified dependencies`,
 		)
 	})
 

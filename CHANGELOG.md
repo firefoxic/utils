@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 ## [Unreleased]
 
+### Added
+
+- The `get-node-matrix` CLI utility now accepts a `--dependencies <package>` flag (short form `-d`, comma-separated list supported) to also read `engines.node` from dependencies' `package.json` files (e.g. `stylelint`), merging the versions with those from the calling project's own `package.json` into a single deduplicated list, keeping only the lowest version in each major line.
+
 ### Fixed
 
 - The package now provides type declarations correctly.

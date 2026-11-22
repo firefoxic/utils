@@ -16,7 +16,7 @@ pnpm add -D @firefoxic/utils
 
 ### `getProjectRoot`
 
-Your action should set the `REPO_NAME` environment variable to the step you want. If your action works with pull requests, you should also add two lines (which are marked below with a special comment) to use the `PR_NUMBER` variable. For example:
+Your action should set the `REPO_NAME` environment variable to the step you want. If your action works with pull requests, you should also add two lines (which are marked below with a special comment) to use the `PR_NUMBER` variable. For example:
 
 ```yaml
 jobs:
@@ -40,7 +40,7 @@ jobs:
           target-folder: ${{ github.event.pull_request.number }} # For PR action
 ```
 
-Than you can get the path to the project root when deploying to GitHub Pages, for example in `vite.config.js`:
+Than you can get the path to the project root when deploying to GitHub Pages, for example in `vite.config.js`:
 
 ```js
 import { defineConfig } from "vite"
@@ -92,9 +92,9 @@ jobs:
 
 ### `get-node-matrix`
 
-A CLI utility that reads the `engines.node` field from the project's `package.json` and prints the minimum Node.js versions (as a JSON array) for use in a GitHub Actions matrix. When running in a GitHub Actions environment, it also appends `node_versions=...` to the file pointed to by `GITHUB_OUTPUT`.
+A CLI utility that reads the `engines.node` field from the project's `package.json` and prints the minimum Node.js versions (as a JSON array) for use in a GitHub Actions matrix. When running in a GitHub Actions environment, it also appends `node_versions=...` to the file pointed to by `GITHUB_OUTPUT`.
 
-Use it in the `discover` job of your workflow:
+Use it in the `discover` job of your workflow:
 
 ```yaml
 jobs:
@@ -127,7 +127,9 @@ jobs:
       - run: make verify
 ```
 
-The utility resolves the project's `package.json` from the current working directory (walking up the directory tree), or from the `npm_package_json` environment variable when run through an npm/pnpm script.
+The utility resolves the project's `package.json` from the current working directory (walking up the directory tree), or from the `npm_package_json` environment variable when run through an npm/pnpm script.
+
+By default it reads `engines.node` from the calling project's own `package.json`. Pass `--dependencies <package>` (or `--dependencies=<package>`, or the short form `-d <package>`) to also read it from dependencies — for example `--dependencies stylelint` to take the Node.js versions required by `stylelint` when it is installed as a dependency. Multiple packages can be passed as a comma-separated list: `--dependencies "stylelint,postcss"`. Versions from the project and all specified dependencies are merged into a single deduplicated list, keeping only the lowest version in each major line (e.g. `22.18.0` over `22.22.2`). If `engines.node` is missing everywhere, the utility fails with an error.
 
 [license-url]: https://github.com/firefoxic/utils/blob/main/LICENSE.md
 [license-image]: https://img.shields.io/badge/License-MIT-limegreen.svg
