@@ -16,10 +16,11 @@
 		"url": "git+https://github.com/firefoxic/utils.git"
 	},
 	"type": "module",
+	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
-			"import": "./dist/index.js",
-			"types": "./dist/index.d.ts"
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
 		},
 		"./package.json": "./package.json"
 	},
